@@ -135,7 +135,7 @@ class QuillEditor extends StatefulWidget {
   final ScrollPhysics? scrollPhysics;
   final ValueChanged<String>? onLaunchUrl;
   final EmbedBuilder embedBuilder;
-
+  final ValueChanged<bool>? onToolbarOptions;
   const QuillEditor(
       {required this.controller,
       required this.focusNode,
@@ -155,7 +155,8 @@ class QuillEditor extends StatefulWidget {
       this.keyboardAppearance = Brightness.light,
       this.scrollPhysics,
       this.onLaunchUrl,
-      this.embedBuilder = _defaultEmbedBuilder});
+      this.embedBuilder = _defaultEmbedBuilder,
+      this.onToolbarOptions});
 
   factory QuillEditor.basic(
       {required QuillController controller, required bool readOnly}) {
@@ -233,45 +234,47 @@ class _QuillEditorState extends State<QuillEditor>
     return _selectionGestureDetectorBuilder.build(
       HitTestBehavior.translucent,
       RawEditor(
-          _editorKey,
-          widget.controller,
-          widget.focusNode,
-          widget.scrollController,
-          widget.scrollable,
-          widget.padding,
-          widget.readOnly,
-          widget.placeholder,
-          widget.onLaunchUrl,
-          ToolbarOptions(
-            copy: true,
-            cut: widget.enableInteractiveSelection,
-            paste: widget.enableInteractiveSelection,
-            selectAll: true,
-          ),
-          theme.platform == TargetPlatform.iOS ||
-              theme.platform == TargetPlatform.android,
-          widget.showCursor,
-          CursorStyle(
-            color: cursorColor,
-            backgroundColor: Colors.grey,
-            width: 2.0,
-            radius: cursorRadius,
-            offset: cursorOffset,
-            paintAboveText: paintCursorAboveText,
-            opacityAnimates: cursorOpacityAnimates,
-          ),
-          widget.textCapitalization,
-          widget.maxHeight,
-          widget.minHeight,
-          widget.customStyles,
-          widget.expands,
-          widget.autoFocus,
-          selectionColor,
-          textSelectionControls,
-          widget.keyboardAppearance,
-          widget.enableInteractiveSelection,
-          widget.scrollPhysics,
-          widget.embedBuilder),
+        _editorKey,
+        widget.controller,
+        widget.focusNode,
+        widget.scrollController,
+        widget.scrollable,
+        widget.padding,
+        widget.readOnly,
+        widget.placeholder,
+        widget.onLaunchUrl,
+        ToolbarOptions(
+          copy: true,
+          cut: widget.enableInteractiveSelection,
+          paste: widget.enableInteractiveSelection,
+          selectAll: true,
+        ),
+        theme.platform == TargetPlatform.iOS ||
+            theme.platform == TargetPlatform.android,
+        widget.showCursor,
+        CursorStyle(
+          color: cursorColor,
+          backgroundColor: Colors.grey,
+          width: 2.0,
+          radius: cursorRadius,
+          offset: cursorOffset,
+          paintAboveText: paintCursorAboveText,
+          opacityAnimates: cursorOpacityAnimates,
+        ),
+        widget.textCapitalization,
+        widget.maxHeight,
+        widget.minHeight,
+        widget.customStyles,
+        widget.expands,
+        widget.autoFocus,
+        selectionColor,
+        textSelectionControls,
+        widget.keyboardAppearance,
+        widget.enableInteractiveSelection,
+        widget.scrollPhysics,
+        widget.embedBuilder,
+        widget.onToolbarOptions,
+      ),
     );
   }
 

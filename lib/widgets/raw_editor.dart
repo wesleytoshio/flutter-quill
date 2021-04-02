@@ -54,7 +54,7 @@ class RawEditor extends StatefulWidget {
   final bool enableInteractiveSelection;
   final ScrollPhysics? scrollPhysics;
   final EmbedBuilder embedBuilder;
-
+  final ValueChanged<bool>? onToolbarOptions;
   const RawEditor(
       Key key,
       this.controller,
@@ -80,7 +80,8 @@ class RawEditor extends StatefulWidget {
       this.keyboardAppearance,
       this.enableInteractiveSelection,
       this.scrollPhysics,
-      this.embedBuilder)
+      this.embedBuilder,
+      this.onToolbarOptions)
       : assert(maxHeight == null || maxHeight > 0, 'maxHeight cannot be null'),
         assert(minHeight == null || minHeight >= 0, 'minHeight cannot be null'),
         assert(maxHeight == null || minHeight == null || maxHeight >= minHeight,
@@ -573,9 +574,10 @@ class RawEditorState extends EditorState
   void _handleSelectionChanged(
       TextSelection selection, SelectionChangedCause cause) {
     widget.controller.updateSelection(selection, ChangeSource.LOCAL);
-
     _selectionOverlay?.handlesVisible = _shouldShowSelectionHandles();
-
+    if (widget.onToolbarOptions != null) {
+      widget.onToolbarOptions!(_selectionOverlay?.handlesVisible ?? false);
+    }
     if (!_keyboardVisible) {
       requestKeyboard();
     }
